@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/* -------------------------Header------------------------------------------ */
+
+header{
+    width: 100%;
+    height: 41px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+.iconBox{
+    width: 245px;
+    height: 41px;
+    margin-left: 45px;
+    display: flex;
+    gap: 16px;
+}
+.textBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 41px;
+  line-height: 1;
+}
+
+.iconText {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0; 
+}
+.iconP {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #9d9d9d;
+  margin: 2px 0 0 0;
+  white-space: nowrap;
+}
+.iconButtons {
+    display: flex;
+    gap: 20px;         
+    padding: 5px 0;  
+}
+.login{
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+    text-decoration: none;
+}
+hr{
+    border: 1px solid #eaeaea;
+    width: 100%;
+    height: 0px;
+    margin-top: 46px;
+}
+
+/* -------------------------HeaderEnd------------------------------------------ */
+
+/* -------------------------Banner------------------------------------------ */
+
+.banner{
+  border-radius: 20px;
+  width: 100%;
+  height: 300px;
+  background: #f4efe9;
+  margin-top: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+.content{
+  width: 318px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+.sponsors{
+  margin-top: 16px;
+  margin-left: 20px;
+}
+.bannerText{
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  color: #8bb43c;
+  margin-top: 32px;
+  margin-left: 61px;
+}
+.black{
+  color: #000;
+}
+.buyButton{
+  border-radius: 110px;
+  width: 177px;
+  height: 47px;
+  background: #a5d364;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  
+  border: none; 
+  margin-left: 60px;
+}
+
+/* -------------------------BannerEnd------------------------------------------ */
+
+/* -------------------------Card------------------------------------------ */
+.cardContainer{
+  width: 100%;
+  height: auto;
+  /* background-color: antiquewhite; */
+}
+.headContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headText{
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #000;
+  margin-left: 60px;
+}
+.searchInput{
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  width: 250px;
+  height: 45px;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #c4c4c4;
+  padding-left: 46px;
+}
+.cards{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.card{
+  border: 1px solid #f3f3f3;
+  border-radius: 40px;
+  width: 210px;
+  height: 260px;
+}
+.sneakersImage{
+  width: 133px;
+  height: 112px;
+  margin-left: 33px;
+}
+.sneakersName{
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000;
+  margin-left: 31px;
+}
+.priceContainer{
+  width: 151px;
+  height: 32px;
+  margin-left: 31px;
+  display: flex;
+  justify-content: space-between;
+}
+.priceBlock{
+  width: 80px;
+  height: 32px;
+  line-height: 1;
+}
+.priceText{
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #bdbdbd;
+
+  margin: 0;
+}
+.price{
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+
+  margin: 0;
+}
+/* -------------------------CardEnd------------------------------------------ */
