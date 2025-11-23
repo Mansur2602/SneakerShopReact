@@ -44,6 +44,23 @@ header{
     gap: 20px;         
     padding: 5px 0;  
 }
+.cartButton {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #a5d364;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0 6px;
+  line-height: 1.4;
+}
 .login{
     font-family: "Inter", sans-serif;
     font-weight: 400;
@@ -197,3 +214,306 @@ hr{
   margin: 0;
 }
 /* -------------------------CardEnd------------------------------------------ */
+/* -------------------------Login------------------------------------------ */
+.loginPage {
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4efe9;
+}
+
+.loginForm {
+  background: #fff;
+  border: 1px solid #f3f3f3;
+  border-radius: 20px;
+  width: 320px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loginTitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #000;
+  margin-bottom: 25px;
+}
+
+.loginInput {
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  width: 100%;
+  height: 45px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #000;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+.loginInput::placeholder {
+  color: #c4c4c4;
+}
+
+.loginButton {
+  border-radius: 110px;
+  width: 100%;
+  height: 47px;
+  background: #a5d364;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background: #8bb43c;
+}
+/* -------------------------LoginEnd------------------------------------------ */
+
+/* -------------------------Footer------------------------------------------ */
+
+.footer {
+width: 100%;
+height: 120px;
+background: #f4efe9;
+margin-top: 60px;
+display: flex;
+justify-content: center;
+align-items: center;
+border-top: 1px solid #eaeaea;
+}
+
+.footerContent {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.footerText {
+font-family: "Inter", sans-serif;
+font-weight: 500;
+font-size: 14px;
+color: #9d9d9d;
+text-align: center;
+}
+
+/* -------------------------FooterEnd------------------------------------------ */
+
+/* -------------------------Basket------------------------------------------ */
+
+.basket {
+  position: fixed;          
+  top: 0;
+  left: 0;                
+  width: 385px;
+  height: 100vh;
+  background-color: white;
+  z-index: 1000;          
+  transition: transform 0.5s;
+  transform: translateX(0); 
+}
+.basket_hidden {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 385px;
+  height: 100vh;
+  background-color: white;
+  z-index: 1000;
+  transition: transform 0.5s;
+  transform: translateX(-100%);
+}
+.basketText{
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #000;
+  padding-top: 32px;
+  padding-left: 30px;
+}
+/* ====== Обертка для списка товаров ====== */
+.basketItems {
+  margin-top: 20px;
+  padding: 0 20px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+/* ====== Один товар в корзине ====== */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* ====== Фото товара ====== */
+.sneakersImg {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ====== Текстовая часть ====== */
+.itemText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.description {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000;
+  line-height: 1.3;
+}
+
+.price {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #000;
+  margin-top: 5px;
+}
+
+.item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #d9534f;
+  font-weight: 600;
+  padding: 6px;
+  transition: 0.2s;
+}
+
+.item button:hover {
+  color: #b52b27;
+  transform: scale(1.05);
+}
+
+
+.basketItems::-webkit-scrollbar {
+  width: 6px;
+}
+
+.basketItems::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 10px;
+}
+
+.emptyBasket{
+  width: 285px;
+  height: 320px;
+  margin-top: 200px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.emptyBasketText{
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: #000;
+}
+.emptyBasketPar{
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #000;
+}
+.returnBackButt{
+  border-radius: 18px;
+  width: 245px;
+  height: 55px;
+  background: #9dd458;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  border: none;
+}
+/* ====== Нижний блок итогов (компактный) ====== */
+.basketTotal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.totalText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalP {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000;
+}
+
+.totalPrice {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #000;
+}
+
+/* ====== Кнопка оформление заказа (компактная) ====== */
+.orderButt {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 14px;
+  background: #9dd458;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.orderButt:hover {
+  background: #8cc251;
+  transform: translateY(-1px);
+}
+
+.orderButt:active {
+  background: #7aad46;
+  transform: translateY(0);
+}
+
+
+/* -------------------------BasketEnd------------------------------------------ */

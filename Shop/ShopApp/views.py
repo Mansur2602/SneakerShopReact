@@ -1,14 +1,43 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status
 from .serializers import *
 import ShopApp.models as m
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .authentication import CookieJWTAuthentication
+from django.http import HttpRequest
+def _set_auth_cookies(response: Response, request: HttpRequest, access_token: str, refresh_token: str) -> None:
+    """
+    Настройка параметров cookie с учётом среды:
+    - В режиме HTTPS используем SameSite=None и Secure=True (совместимо с кросс-доменом).
+    - В режиме HTTP (локальная разработка) откатываемся на SameSite='Lax', чтобы браузер не блокировал cookie.
+    """
+    secure = request.is_secure()
+    same_site = 'None' if secure else 'Lax'
+
+    response.set_cookie(
+        key='access_token',
+        value=access_token,
+        httponly=True,
+        samesite=same_site,
+        secure=secure
+    )
+    response.set_cookie(
+        key='refresh_token',
+        value=refresh_token,
+        httponly=True,
+        samesite=same_site,
+        secure=secure
+    )
+
+
 
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def SneakerList(request):
     if request.method == 'GET':
         sneakers = m.Sneaker.objects.all()
@@ -41,18 +70,7 @@ def LoginView(request):
             }
         }, status=status.HTTP_200_OK)
 
-        response.set_cookie(
-            key='access_token',
-            value=access_token,
-            httponly=True,
-            samesite='Lax'
-        )
-        response.set_cookie(
-            key='refresh_token',
-            value=refresh_token,
-            httponly=True,
-            samesite='Lax'
-        )
+        _set_auth_cookies(response, request, access_token, refresh_token)
         
         return response
      
@@ -91,17 +109,50 @@ def RegisterView(request):
             }
         }, status=status.HTTP_200_OK)
 
-    response.set_cookie(
-            key='access_token',
-            value=access_token,
-            httponly=True,
-            samesite='Lax'
-        )
-    response.set_cookie(
-            key='refresh_token',
-            value=refresh_token,
-            httponly=True,
-            samesite='Lax'
-        )
+    _set_auth_cookies(response, request, access_token, refresh_token)
         
     return response
+
+
+
+@api_view(['GET', 'POST', 'DELETE'])
+@authentication_classes([CookieJWTAuthentication])
+@permission_classes([IsAuthenticated])  
+def CartList(request):
+
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return Response({"error": "Пользователь не авторизован"}, status=401)
+        cartItems = m.CartItem.objects.filter(user=request.user)
+        serializer = CartItemSerializer(cartItems, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    elif request.method == 'POST':
+
+        sneakerId = request.data.get("sneakerId")
+        if not sneakerId:
+            return Response({"error": "Не передан sneakerId"}, status=400)
+        
+        try:
+            sneaker = m.Sneaker.objects.get(id=sneakerId)
+        except m.Sneaker.DoesNotExist:
+            return Response({"error": "Кроссовки не найдены"}, status=404)
+        
+        item, created = m.CartItem.objects.get_or_create(
+            user=request.user,  
+            sneaker=sneaker,
+            defaults={"quantity": 1}
+        )
+        status_code = status.HTTP_201_CREATED
+
+        serializer = CartItemSerializer(item)
+
+        return Response(serializer.data, status=status_code)
+    elif request.method == 'DELETE':
+        sneakerId = request.data.get("sneakerId")
+        if sneakerId:
+            m.CartItem.objects.filter(user=request.user, sneaker__id=sneakerId).delete()
+            return Response({"message": "Элемент удален из корзины"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)
+

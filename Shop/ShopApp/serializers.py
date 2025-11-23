@@ -18,3 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+class CartItemSerializer(serializers.ModelSerializer):
+    sneaker = SneakerSerializer(read_only=True)
+
+    class Meta:
+        model = m.CartItem
+        fields = ['id', 'quantity', 'sneaker']

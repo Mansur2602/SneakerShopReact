@@ -8,7 +8,7 @@ class Sneaker(models.Model):
         return self.name
     
 class CartItem(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey('auth.User', null=False,  on_delete=models.CASCADE, verbose_name="Пользователь")
     sneaker = models.ForeignKey(Sneaker, on_delete=models.CASCADE, verbose_name="Кроссовки")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
 
