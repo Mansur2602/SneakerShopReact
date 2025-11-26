@@ -156,3 +156,39 @@ def CartList(request):
         else:
             return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'POST', 'DELETE'])
+@authentication_classes([CookieJWTAuthentication])
+@permission_classes([IsAuthenticated])
+def FavoriteList(request):
+    if request.method == 'GET':
+        favoriteItems = m.FavoriteItem.objects.filter(user=request.user)
+        serializers = FavoriteItemSerializer(favoriteItems, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
+    
+    elif request.method == 'POST':
+
+        sneakerId = request.data.get("sneakerId")
+        if not sneakerId:
+            return Response({"error": "Не передан sneakerId"}, status=400)
+        
+        try:
+            sneaker = m.Sneaker.objects.get(id=sneakerId)
+        except m.Sneaker.DoesNotExist:
+            return Response({"error": "Кроссовки не найдены"}, status=404)
+        
+        item = m.FavoriteItem.objects.create(
+            user=request.user,  
+            sneaker=sneaker,
+        )
+        status_code = status.HTTP_201_CREATED
+
+        serializer = FavoriteItemSerializer(item)
+
+        return Response(serializer.data, status=status_code)
+    elif request.method == 'DELETE':
+        sneakerId = request.data.get("sneakerId")
+        if sneakerId:
+            m.FavoriteItem.objects.filter(user=request.user, sneaker__id=sneakerId).delete()
+            return Response({"message": "Элемент удален из избранного"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)

@@ -1,4 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.appWrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 /* -------------------------Header------------------------------------------ */
 
 header{
@@ -159,18 +171,26 @@ hr{
   color: #c4c4c4;
   padding-left: 46px;
 }
-.cards{
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+  padding: 0 60px;
 }
+
+
 .card{
   border: 1px solid #f3f3f3;
   border-radius: 40px;
   width: 210px;
   height: 260px;
+  position: relative;
+}
+.favoriteIcon {
+  position: absolute;
+  top: 10px;
+  left: 10px; 
+  cursor: pointer;
 }
 .sneakersImage{
   width: 133px;
@@ -292,6 +312,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 border-top: 1px solid #eaeaea;
+margin-top: auto;
 }
 
 .footerContent {
@@ -342,7 +363,6 @@ text-align: center;
   padding-top: 32px;
   padding-left: 30px;
 }
-/* ====== Обертка для списка товаров ====== */
 .basketItems {
   margin-top: 20px;
   padding: 0 20px;
@@ -350,7 +370,7 @@ text-align: center;
   overflow-y: auto;
 }
 
-/* ====== Один товар в корзине ====== */
+
 .item {
   display: flex;
   align-items: center;
@@ -359,7 +379,7 @@ text-align: center;
   border-bottom: 1px solid #f0f0f0;
 }
 
-/* ====== Фото товара ====== */
+
 .sneakersImg {
   width: 80px;
   height: 80px;
@@ -367,7 +387,6 @@ text-align: center;
   border-radius: 12px;
 }
 
-/* ====== Текстовая часть ====== */
 .itemText {
   display: flex;
   flex-direction: column;
@@ -453,7 +472,6 @@ text-align: center;
   color: #fff;
   border: none;
 }
-/* ====== Нижний блок итогов (компактный) ====== */
 .basketTotal {
   position: absolute;
   bottom: 0;
@@ -488,7 +506,6 @@ text-align: center;
   color: #000;
 }
 
-/* ====== Кнопка оформление заказа (компактная) ====== */
 .orderButt {
   width: 100%;
   height: 45px;
@@ -517,3 +534,30 @@ text-align: center;
 
 
 /* -------------------------BasketEnd------------------------------------------ */
+
+/* -------------------------Favorite------------------------------------------ */
+.favoriteHeader{
+  width: 274px;
+  height: 39px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 60px;
+}
+.returnBack{
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.favoriteText{
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #000;
+}
+
+/* -------------------------FavoriteEnd------------------------------------------ */

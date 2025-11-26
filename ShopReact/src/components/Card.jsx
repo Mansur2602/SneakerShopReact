@@ -1,61 +1,32 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import addButton from "../assets/addButton.svg";
-import apiClient from "../api/client";
 import ChMark from "../assets/ChMark.svg";
+import favoriteIcon from "../assets/favoriteIcon.png";
 
-const Card = ({ cartItems, addToCart, removeFromCart }) => {
-  const [sneakers, setSneakers] = useState([]);
+const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDeleteFromCart, toggleFavorite}) => {  
+  const [seacrh, setSearch] = useState("");
 
-  useEffect(() => {
-    getSneakers();
-  }, []);
-
-  const getSneakers = () => {
-    apiClient
-      .get("sneaker/")
-      .then((response) => {
-        setSneakers(response.data);
-      })
-      .catch((error) => {
-        console.error("Ошибка при получении данных:", error);
-      });
-  };
-
-  const handleAddToCart = (sneakerId) => {
-    apiClient
-      .post("cart/", { sneakerId })
-      .then((response) => {
-        addToCart(response.data); 
-      })
-      .catch((error) => {
-        console.error("Ошибка при добавлении товара в корзину:", error);
-      });
-  };
-
-  const handleDeleteFromCart = (sneakerId) => {
-    apiClient
-      .delete("cart/", { data: { sneakerId } })
-      .then((response) => {
-        removeFromCart(sneakerId); 
-      })
-      .catch((error) => {
-        console.error("Ошибка при удалении товара из корзины:", error);
-      });
-  };
+  const SearchSneaker = sneakers.filter((sneaker) =>
+    sneaker.name.toLowerCase().includes(seacrh.toLowerCase())
+  );
 
   return (
     <div className="cardContainer">
       <div className="headContent">
         <h1 className="headText">Все кроссовки</h1>
-        <input className="searchInput" placeholder="Поиск" type="text" />
+        <input value={seacrh} onChange={(e) => setSearch(e.target.value)} className="searchInput" placeholder="Поиск" type="text" />
       </div>
       <div className="cards">
-        {sneakers.length > 0 ? (
-      sneakers.map((sneaker) => {
+        {SearchSneaker.length > 0 ? (
+      SearchSneaker.map((sneaker) => {
         const inCart = cartItems.some(item => item.sneaker.id === sneaker.id);
 
       return (
-      <div className="card" key={sneaker.id}>
+      <div onClick={() => toggleFavorite(sneaker.id)} className="card" key={sneaker.id}>
+        {favoriteItems.some(item => item.sneaker.id === sneaker.id) && (
+          <img className="favoriteIcon" src={favoriteIcon} alt="В избранном" />
+        )}
+  
         <img className="sneakersImage" src={`http://127.0.0.1:8000${sneaker.image}`} alt={sneaker.name}/>
         <p className="sneakersName">{sneaker.name}</p>
         <div className="priceContainer">
@@ -65,9 +36,9 @@ const Card = ({ cartItems, addToCart, removeFromCart }) => {
           </div>
 
           {inCart ? (
-            <img onClick={() => handleDeleteFromCart(sneaker.id)} src={ChMark} alt="Удалить из корзины"/>
+            <img onClick={(e) => handleDeleteFromCart(sneaker.id, e)} src={ChMark} alt="Удалить из корзины"/>
           ) : (
-            <img onClick={() => handleAddToCart(sneaker.id)} src={addButton} alt="Добавить в корзину"/>
+            <img onClick={(e) => handleAddToCart(sneaker.id, e)} src={addButton} alt="Добавить в корзину"/>
           )}
         </div>
       </div>

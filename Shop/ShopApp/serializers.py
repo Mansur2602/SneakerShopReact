@@ -25,3 +25,10 @@ class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = m.CartItem
         fields = ['id', 'quantity', 'sneaker']
+
+class FavoriteItemSerializer(serializers.ModelSerializer):
+    sneaker = SneakerSerializer(read_only=True)
+
+    class Meta:
+        model = m.FavoriteItem
+        fields = ['id', 'sneaker']

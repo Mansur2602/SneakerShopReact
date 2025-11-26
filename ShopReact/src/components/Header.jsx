@@ -3,13 +3,16 @@ import cart from "../assets/cart.svg";
 import favorite from "../assets/favorite.svg";
 import empty from "../assets/empty.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../api/client";
 import { useState } from "react";
 
 
-const Header = ({ user, setUser, cartItems, removeFromCart }) => {
+const Header = ({user, setUser, handleDeleteFromCart}) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
+  const cartItems = useSelector((state) => state.cart.items);
 
   const handleLogout = async () => {
     try {
@@ -26,16 +29,7 @@ const Header = ({ user, setUser, cartItems, removeFromCart }) => {
     setActive(!active);
   };
 
-  const handleDeleteFromCart = (sneakerId) => {
-    apiClient
-      .delete("cart/", { data: { sneakerId } })
-      .then((response) => {
-        removeFromCart(sneakerId); 
-      })
-      .catch((error) => {
-        console.error("Ошибка при удалении товара из корзины:", error);
-      });
-  };
+
 
   return (
     <>
@@ -52,7 +46,7 @@ const Header = ({ user, setUser, cartItems, removeFromCart }) => {
                   <p className="description">{item.sneaker.name}</p>
                   <p className="price">{item.sneaker.price} тг</p>
                 </div>
-                <button onClick={() => handleDeleteFromCart(item.sneaker.id)}> Удалить </button>
+                <button onClick={(e) => handleDeleteFromCart(item.sneaker.id, e)}> Удалить </button>
               </div>
             )
           )
@@ -92,7 +86,7 @@ const Header = ({ user, setUser, cartItems, removeFromCart }) => {
           <div className="cartButton" onClick={BasketClick}>
             <img src={cart} alt="" />
           </div>
-          <img src={favorite} alt="" />
+          <Link className="favorite" to="/favorite"><img src={favorite} alt="" /></Link>
           {user ? (
             <>
               <span className="login">Привет, {user.username}!</span>
