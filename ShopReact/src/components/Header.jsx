@@ -3,16 +3,14 @@ import cart from "../assets/cart.svg";
 import favorite from "../assets/favorite.svg";
 import empty from "../assets/empty.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import apiClient from "../api/client";
 import { useState } from "react";
 
 
-const Header = ({user, setUser, handleDeleteFromCart}) => {
-  const dispatch = useDispatch();
+const Header = ({user, cartItems, setUser, handleDeleteFromCart}) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
-  const cartItems = useSelector((state) => state.cart.items);
 
   const handleLogout = async () => {
     try {
@@ -28,8 +26,6 @@ const Header = ({user, setUser, handleDeleteFromCart}) => {
   const BasketClick = () => {
     setActive(!active);
   };
-
-
 
   return (
     <>

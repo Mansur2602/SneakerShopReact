@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .authentication import CookieJWTAuthentication
 from django.http import HttpRequest
+
 def _set_auth_cookies(response: Response, request: HttpRequest, access_token: str, refresh_token: str) -> None:
     """
     Настройка параметров cookie с учётом среды:

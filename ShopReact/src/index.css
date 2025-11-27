@@ -176,6 +176,7 @@ hr{
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 20px;
   padding: 0 60px;
+  margin-top: 30px;
 }
 
 

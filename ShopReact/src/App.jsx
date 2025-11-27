@@ -50,7 +50,7 @@ function App() {
   return (
     <div className="appWrapper">
     <BrowserRouter>
-      <Header user = {user} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} />
+      <Header user = {user} cartItems={cartItems} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} />
       {/* <Basket/> */}
       <Routes>
         <Route path="/" element={<><Banner/><Card sneakers={sneakers} cartItems={cartItems} favoriteItems={favoriteItems} handleAddToCart={handleAddToCart}
