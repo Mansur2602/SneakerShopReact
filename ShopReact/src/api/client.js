@@ -1,12 +1,30 @@
 import axios from "axios";
 
-const defaultOrigin = `${window.location.protocol}//${window.location.hostname}:8000`;
-const apiOrigin = import.meta.env.VITE_API_ORIGIN ?? defaultOrigin;
-
 const apiClient = axios.create({
-  baseURL: `${apiOrigin.replace(/\/$/, "")}/api/`,
-  withCredentials: true,
+  baseURL: "http://localhost:8000/api/",
+  withCredentials: true, 
 });
 
-export default apiClient;
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      const detail = error.response.data?.detail;
 
+      if (
+        detail?.includes("token") ||
+        detail?.includes("expired") ||
+        detail?.includes("credentials") ||
+        detail?.includes("Authentication")
+      ) {
+        localStorage.removeItem("user");
+        alert("Сессия истекла или вы не вошли.");
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export default apiClient;

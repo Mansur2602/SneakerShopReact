@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import addButton from "../assets/addButton.svg";
 import ChMark from "../assets/ChMark.svg";
 import favoriteIcon from "../assets/favoriteIcon.png";
+import emptyFav from "../assets/emptyFav.png";
 
 const Favorite = ({favoriteItems, cartItems, handleAddToCart, handleDeleteFromCart, toggleFavorite }) => 
 {
@@ -40,7 +41,13 @@ const Favorite = ({favoriteItems, cartItems, handleAddToCart, handleDeleteFromCa
               );
             })
           ) : (
-            <p>Закладок пока нет...</p>
+            <div className="emptyFav">
+                          <img src={emptyFav} alt="Пустое избранное" width={120} height={120} />
+                          <h1 className="emptyFavText">Избранное пустая</h1>
+                          <p className="emptyFavPar">Добавьте хотя бы одну пару <br />
+                             кроссовок, чтобы увидеть их здесь.</p>
+                        
+                        </div>
           )}
         </div>
         </>

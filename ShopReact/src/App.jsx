@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchCart, fetchFavorites, fetchSneakers, addToCart, removeFromCart, addToFavorite, removeFromFavorite } from "./store/actions";
+import {fetchCart, fetchFavorites, fetchSneakers, addToCart, removeFromCart, addToFavorite, removeFromFavorite, clearCart } from "./store/actions";
 import "./App.css";
 import Header from "./components/Header";
 import Card from "./components/Card";
@@ -46,11 +46,17 @@ function App() {
     }
   }
 
+  const DeleteAll = (e) => {
+    e.preventDefault();
+    dispatch(clearCart());
+    alert("Ваш заказ оформлен!");
+  }
+
   
   return (
     <div className="appWrapper">
     <BrowserRouter>
-      <Header user = {user} cartItems={cartItems} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} />
+      <Header user = {user} cartItems={cartItems} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} DeleteAll={DeleteAll} />
       {/* <Basket/> */}
       <Routes>
         <Route path="/" element={<><Banner/><Card sneakers={sneakers} cartItems={cartItems} favoriteItems={favoriteItems} handleAddToCart={handleAddToCart}

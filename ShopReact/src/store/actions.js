@@ -5,6 +5,7 @@ export const SET_SNEAKERS = "SET_SNEAKERS";
 export const SET_CART = "SET_CART";
 export const ADD_CART = "ADD_CART";
 export const REMOVE_CART = "REMOVE_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const SET_FAVORITES = "SET_FAVORITES";
 export const ADD_FAVORITE = "ADD_FAVORITE";
@@ -42,6 +43,13 @@ export const removeFromCart = (sneakerId) => {
   return async (dispatch) => {
     await apiClient.delete("cart/", { data: { sneakerId } });
     dispatch({ type: REMOVE_CART, payload: sneakerId });
+  };
+};
+
+export const clearCart = () => {
+  return async (dispatch) => {
+    await apiClient.delete("cart/", { params: { deleteAll: true } });
+    dispatch({ type: CLEAR_CART });
   };
 };
 

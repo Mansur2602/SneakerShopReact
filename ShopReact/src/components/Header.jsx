@@ -8,7 +8,7 @@ import apiClient from "../api/client";
 import { useState } from "react";
 
 
-const Header = ({user, cartItems, setUser, handleDeleteFromCart}) => {
+const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll}) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
 
@@ -26,6 +26,8 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart}) => {
   const BasketClick = () => {
     setActive(!active);
   };
+
+
 
   return (
     <>
@@ -65,7 +67,7 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart}) => {
                 {cartItems.reduce((sum, item) => sum + Number(item.sneaker.price), 0)} тг
               </b>
             </div>
-            <button className="orderButt">Оформить заказ</button>
+            <button onClick={(e) => DeleteAll(e)} className="orderButt">Оформить заказ</button>
           </div>
         )}
       </div>
@@ -86,9 +88,10 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart}) => {
           {user ? (
             <>
               <span className="login">Привет, {user.username}!</span>
-              <button onClick={handleLogout} className="logoutButton">
-                Выйти
-              </button>
+              {/* <button onClick={handleLogout} className="logoutButton">
+                
+              </button> */}
+              <a className="login" onClick={handleLogout}>Выйти</a>
             </>
           ) : (
             <Link className="login" to="/login">Войти</Link>

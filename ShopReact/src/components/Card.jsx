@@ -2,6 +2,7 @@ import { useState } from "react";
 import addButton from "../assets/addButton.svg";
 import ChMark from "../assets/ChMark.svg";
 import favoriteIcon from "../assets/favoriteIcon.png";
+import notFound from "../assets/notFound.png";
 
 const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDeleteFromCart, toggleFavorite}) => {  
   const [seacrh, setSearch] = useState("");
@@ -45,7 +46,7 @@ const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDelete
     );
   })
 ) : (
-  <p>Загрузка Кроссовок...</p>
+  <img className="notFound" src={notFound} alt="" />
 )}
 
       </div>

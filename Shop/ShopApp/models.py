@@ -4,6 +4,7 @@ class Sneaker(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название кроссовок")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     image = models.ImageField(upload_to='sneakers/', verbose_name="Изображение")
+    
     def __str__(self):
         return self.name
     

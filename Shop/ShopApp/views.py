@@ -96,6 +96,19 @@ def RegisterView(request):
     if User.objects.filter(username=username).exists():
         return Response({"error": "Пользователь с таким логином уже существует"}, status=status.HTTP_400_BAD_REQUEST)
     
+    if len(password) < 6:
+        return Response({"error": "Пароль должен быть не менее 6 символов"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if password.isdigit():
+        return Response({"error": "Пароль не должен состоять только из цифр"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if password.isalpha():
+        return Response({"error": "Пароль не должен состоять только из букв"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if password.lower() == username.lower():
+        return Response({"error": "Пароль не должен быть слишком похож на логин"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
     user = User.objects.create_user(username=username, password=password)
     
     refresh = RefreshToken.for_user(user)
@@ -151,9 +164,13 @@ def CartList(request):
         return Response(serializer.data, status=status_code)
     elif request.method == 'DELETE':
         sneakerId = request.data.get("sneakerId")
+        deleteAll = request.query_params.get("deleteAll")
         if sneakerId:
             m.CartItem.objects.filter(user=request.user, sneaker__id=sneakerId).delete()
             return Response({"message": "Элемент удален из корзины"}, status=status.HTTP_200_OK)
+        elif deleteAll == 'true':
+            m.CartItem.objects.filter(user=request.user).delete()
+            return Response({"message": "Все элементы удалены из корзины"}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -191,5 +208,6 @@ def FavoriteList(request):
         if sneakerId:
             m.FavoriteItem.objects.filter(user=request.user, sneaker__id=sneakerId).delete()
             return Response({"message": "Элемент удален из избранного"}, status=status.HTTP_200_OK)
+
         else:
             return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)

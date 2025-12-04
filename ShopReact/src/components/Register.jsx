@@ -19,9 +19,10 @@ const Register = ({setUser}) =>
     navigate("/"); 
     }
     catch (error) {
-        console.error("Ошибка при регистрации:", error);
-        alert("Ошибка при регистрации");
-    }
+    console.error("Ошибка при регистрации:", error.response.data.error);
+    alert(error.response.data.error);
+}
+
 }
 
 

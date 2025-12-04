@@ -59,15 +59,15 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
 
-    'ROTATE_REFRESH_TOKENS': True,
+    'ROTATE_REFRESH_TOKENS': True, # При обновлении refresh токена выдаётся новый
 
-    'BLACKLIST_AFTER_ROTATION': True,
+    'BLACKLIST_AFTER_ROTATION': True, # Старый refresh токен добавляется в blacklist
 
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Время жизни access токена
 
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Время жизни refresh токена
 }
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -83,14 +83,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173"
 ]
 
-SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SAMESITE = "None" # Разрешает отправку cookie между разными доменами
+SESSION_COOKIE_SECURE = False # Cookie работают без HTTPS (только для разработки)
 
-CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = "None" # Cookie работают без HTTPS (только для разработки)
+CSRF_COOKIE_SECURE = False  # CSRF cookie работают без HTTPS (только dev)
 
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True # Разрешает отправлять cookies и токены в запросах
 
 ROOT_URLCONF = 'Shop.urls'
 

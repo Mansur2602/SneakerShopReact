@@ -1,4 +1,4 @@
-import { SET_CART, ADD_CART, REMOVE_CART } from "./actions";
+import { SET_CART, ADD_CART, REMOVE_CART, CLEAR_CART } from "./actions";
 
 const initialState = {
   items: [],
@@ -14,6 +14,9 @@ export default function cartReducer(state = initialState, action) {
 
     case REMOVE_CART:
       return { ...state, items: state.items.filter((i) => i.sneaker.id !== action.payload),};
+    
+    case CLEAR_CART:
+      return { ...state, items: [] };
 
     default:
       return state;
