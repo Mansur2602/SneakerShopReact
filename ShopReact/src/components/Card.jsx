@@ -6,10 +6,14 @@ import notFound from "../assets/notFound.png";
 
 const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDeleteFromCart, toggleFavorite}) => {  
   const [seacrh, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
 
   const SearchSneaker = sneakers.filter((sneaker) =>
     sneaker.name.toLowerCase().includes(seacrh.toLowerCase())
   );
+
+ 
 
   return (
     <div className="cardContainer">
@@ -17,6 +21,14 @@ const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDelete
         <h1 className="headText">Все кроссовки</h1>
         <input value={seacrh} onChange={(e) => setSearch(e.target.value)} className="searchInput" placeholder="Поиск" type="text" />
       </div>
+      {showModal && (
+      <div className="modalOverlay">
+      <div className="modalWindow">
+        <p>{modalText}</p>
+        </div>
+    </div>
+      )}
+
       <div className="cards">
         {SearchSneaker.length > 0 ? (
       SearchSneaker.map((sneaker) => {
@@ -27,19 +39,26 @@ const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDelete
         {favoriteItems.some(item => item.sneaker.id === sneaker.id) && (
           <img className="favoriteIcon" src={favoriteIcon} alt="В избранном" />
         )}
-  
+        <div className="descriptionContainer">
+          <p>{sneaker.description}</p>
+        </div>
         <img className="sneakersImage" src={`http://127.0.0.1:8000${sneaker.image}`} alt={sneaker.name}/>
         <p className="sneakersName">{sneaker.name}</p>
         <div className="priceContainer">
           <div className="priceBlock">
             <p className="priceText">Цена:</p>
-            <b className="price">{sneaker.price} тг</b>
+            <b className="price">{Number(sneaker.price)} тг</b>
           </div>
 
           {inCart ? (
             <img onClick={(e) => handleDeleteFromCart(sneaker.id, e)} src={ChMark} alt="Удалить из корзины"/>
           ) : (
-            <img onClick={(e) => handleAddToCart(sneaker.id, e)} src={addButton} alt="Добавить в корзину"/>
+            <img onClick={(e) => { handleAddToCart(sneaker.id, e); setModalText(`${sneaker.name} добавлен в корзину`);setShowModal(true);
+            setTimeout(() => setShowModal(false), 1500);
+            }}
+            src={addButton}
+            alt="Добавить в корзину"/>
+
           )}
         </div>
       </div>
@@ -48,6 +67,7 @@ const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDelete
 ) : (
   <img className="notFound" src={notFound} alt="" />
 )}
+
 
       </div>
     </div>

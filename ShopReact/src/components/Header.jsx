@@ -5,12 +5,27 @@ import empty from "../assets/empty.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import apiClient from "../api/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
-const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll}) => {
+const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll, isAdmin}) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
+ 
+
+
+  // useEffect(() => {
+  //   const checkAdmin = async () => {
+  //     try {
+  //       const res = await apiClient.get("is-admin/");
+  //       setIsAdmin(res.data.is_admin); 
+  //     } catch (error) {`
+  //       setIsAdmin(false); 
+  //     }
+  //   };
+
+  //   if (user) checkAdmin(); 
+  // }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -87,10 +102,10 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll}) => 
           <Link className="favorite" to="/favorite"><img src={favorite} alt="" /></Link>
           {user ? (
             <>
+              {/* <Link to="/adminSneaker">Административная панель</Link> */}
+              {isAdmin && (<Link className="login" to="/adminSneaker">Админ панель</Link>)}
+              
               <span className="login">Привет, {user.username}!</span>
-              {/* <button onClick={handleLogout} className="logoutButton">
-                
-              </button> */}
               <a className="login" onClick={handleLogout}>Выйти</a>
             </>
           ) : (

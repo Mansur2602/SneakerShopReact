@@ -9,4 +9,8 @@ urlpatterns = [
     path('register/', views.RegisterView, name='register'),
     path('cart/', views.CartList, name='cartItemList'),
     path('favorites/', views.FavoriteList, name='favoriteItemList'),
+    
+    path('admin/users/', views.AdminUserList, name='adminUserList'),
+    path('admin/sneakers/', views.AdminSneakerList, name='adminSneakerList'),
+    path('admin/is_admin/', views.is_admin, name='isAdmin'),
 ]

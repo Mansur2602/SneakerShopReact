@@ -13,3 +13,5 @@ class CookieJWTAuthentication(JWTAuthentication):
 
         except Exception:
             return None
+        
+

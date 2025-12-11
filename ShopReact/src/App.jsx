@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchCart, fetchFavorites, fetchSneakers, addToCart, removeFromCart, addToFavorite, removeFromFavorite, clearCart } from "./store/actions";
+import {fetchIsAdmin, fetchCart, fetchFavorites, fetchSneakers, addToCart, removeFromCart, addToFavorite, removeFromFavorite, clearCart } from "./store/actions";
 import "./App.css";
 import Header from "./components/Header";
 import Card from "./components/Card";
@@ -10,10 +10,12 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import Favorite from "./components/Favorite";
+import AdminSneaker from "./components/AdminSneaker";
 
 function App() {
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
+  const isAdmin = useSelector(state => state.isAdmin.isAdmin);
   const sneakers = useSelector((state) => state.sneakers.items);
   const cartItems = useSelector((state) => state.cart.items);
   const favoriteItems = useSelector((state) => state.favorites.items);
@@ -23,6 +25,7 @@ function App() {
     if (user) { 
     dispatch(fetchCart()); 
     dispatch(fetchFavorites());
+    dispatch(fetchIsAdmin());
     }
   }, [user]);
 
@@ -56,8 +59,8 @@ function App() {
   return (
     <div className="appWrapper">
     <BrowserRouter>
-      <Header user = {user} cartItems={cartItems} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} DeleteAll={DeleteAll} />
-      {/* <Basket/> */}
+      <Header user = {user} cartItems={cartItems} setUser = {setUser} handleDeleteFromCart={handleDeleteFromCart} DeleteAll={DeleteAll}
+      isAdmin = {isAdmin} />
       <Routes>
         <Route path="/" element={<><Banner/><Card sneakers={sneakers} cartItems={cartItems} favoriteItems={favoriteItems} handleAddToCart={handleAddToCart}
         handleDeleteFromCart={handleDeleteFromCart} toggleFavorite={toggleFavorite}/></>} />
@@ -65,6 +68,9 @@ function App() {
         <Route path="/register" element={<Register setUser = {setUser}/>} />
         <Route path="/favorite" element={<Favorite cartItems={cartItems} favoriteItems={favoriteItems} handleAddToCart={handleAddToCart}
         handleDeleteFromCart={handleDeleteFromCart} toggleFavorite={toggleFavorite} />}></Route>
+        <Route path="/adminSneaker" element={ isAdmin ? (<AdminSneaker sneakers={sneakers}/>) : 
+        <></>
+      }></Route>
       </Routes>
      <Footer/>
     </BrowserRouter>

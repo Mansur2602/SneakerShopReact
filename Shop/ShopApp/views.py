@@ -58,6 +58,7 @@ def LoginView(request):
 
     user = authenticate(username=username, password=password)
     if user is not None:
+
   
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
@@ -67,12 +68,11 @@ def LoginView(request):
             "message": "Успешный вход",
             "user": {
                 "id": user.id,
-                "username": user.username
+                "username": user.username,
             }
         }, status=status.HTTP_200_OK)
 
         _set_auth_cookies(response, request, access_token, refresh_token)
-        
         return response
      
     else:
@@ -211,3 +211,61 @@ def FavoriteList(request):
 
         else:
             return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST', 'PUT', 'DELETE'])
+def AdminSneakerList(request):
+    if not request.user.is_staff:
+        return Response({"error": "Доступ запрещен"}, status=status.HTTP_403_FORBIDDEN)
+    
+    elif request.method == 'POST':
+        serializer = SneakerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'PUT':
+        sneakerId = request.data.get("sneakerId")
+        if not sneakerId:
+            return Response({"error": "Не передан sneakerId"}, status=400)
+        try:
+            sneaker = m.Sneaker.objects.get(id=sneakerId)
+        except m.Sneaker.DoesNotExist:
+            return Response({"error": "Кроссовки не найдены"}, status=404)
+        serializer = SneakerSerializer(sneaker, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()  
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        sneakerId = request.data.get("sneakerId")
+        if not sneakerId:
+            return Response({"error": "Не передан sneakerId"}, status=400)
+        try:
+            sneaker = m.Sneaker.objects.get(id=sneakerId)
+        except m.Sneaker.DoesNotExist:
+            return Response({"error": "Кроссовки не найдены"}, status=404)
+        sneaker.delete()
+        return Response({"message": "Кроссовки удалены"}, status=status.HTTP_200_OK)
+
+    
+
+@api_view(['GET'])
+@authentication_classes([CookieJWTAuthentication])
+@permission_classes([IsAuthenticated])
+def AdminUserList(request):
+    if not request.user.is_staff:
+        return Response({"error": "Доступ запрещен"}, status=status.HTTP_403_FORBIDDEN)
+    
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+@api_view(["GET"])
+@authentication_classes([CookieJWTAuthentication])
+@permission_classes([IsAuthenticated])
+def is_admin(request):
+    return Response({"is_admin": request.user.is_staff }, status=status.HTTP_200_OK)

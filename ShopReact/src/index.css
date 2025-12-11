@@ -81,6 +81,7 @@ header{
     font-size: 14px;
     color: #000;
     text-decoration: none;
+    cursor: pointer;
 }
 hr{
     border: 1px solid #eaeaea;
@@ -250,6 +251,94 @@ hr{
   align-items: center;
 
 }
+
+.descriptionContainer {
+  position: absolute;
+  top: -180px; 
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  width: 260px;
+  max-height: 150px; 
+  overflow-y: auto; 
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+  scrollbar-width: thin;          
+  scrollbar-color: #ffffff52 transparent;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 999;
+}
+
+.descriptionContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.descriptionContainer::-webkit-scrollbar-thumb {
+  background-color: #ffffff4f;
+  border-radius: 10px;
+}
+
+.card:hover .descriptionContainer {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+}
+
+.descriptionContainer::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.85) transparent transparent transparent;
+}
+
+.card {
+  position: relative;
+  overflow: visible;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 2000;
+}
+
+.modalWindow {
+  margin-top: 40px;
+  background: #4caf50;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  opacity: 0;
+  animation: fadeInOut 1.5s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
 /* -------------------------CardEnd------------------------------------------ */
 /* -------------------------Login------------------------------------------ */
 .loginPage {
