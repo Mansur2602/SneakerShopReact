@@ -40,19 +40,42 @@ export const fetchSneakers = () => {
   };
 };
 
+
 export const addSneaker = (sneakerData) => {
   return async (dispatch) => {
-    const res = await apiClient.post("admin/sneakers/", sneakerData);
+    const formData = new FormData();
+    formData.append("name", sneakerData.name);
+    formData.append("description", sneakerData.description);
+    formData.append("price", sneakerData.price);
+    formData.append("image", sneakerData.image);
+
+    const res = await apiClient.post("admin/sneakers/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     dispatch({ type: ADD_SNEAKER, payload: res.data });
   }
-}
+ }
+
+// export const updateSneaker = (sneakerId, updatedData) => {
+//   return async (dispatch) => {
+//     const res = await apiClient.put("admin/sneakers/", { sneakerId, ...updatedData });
+//     dispatch({ type: UPDATE_SNEAKER, payload: res.data });
+//   };
+// };
 
 export const updateSneaker = (sneakerId, updatedData) => {
   return async (dispatch) => {
-    const res = await apiClient.put("admin/sneakers/", { sneakerId, ...updatedData });
+    updatedData.append("sneakerId", sneakerId);
+    const res = await apiClient.put("admin/sneakers/", updatedData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     dispatch({ type: UPDATE_SNEAKER, payload: res.data });
-  };
-};
+  }
+}
 
 export const deleteSneaker = (sneakerId) => {
   return async (dispatch) => {

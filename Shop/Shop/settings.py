@@ -83,10 +83,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173"
 ]
 
-SESSION_COOKIE_SAMESITE = "None" # Разрешает отправку cookie между разными доменами
+SESSION_COOKIE_SAMESITE = "Lax" # Разрешает отправку cookie между разными доменами
 SESSION_COOKIE_SECURE = False # Cookie работают без HTTPS (только для разработки)
 
-CSRF_COOKIE_SAMESITE = "None" # Cookie работают без HTTPS (только для разработки)
+CSRF_COOKIE_SAMESITE = "Lax" # Cookie работают без HTTPS (только для разработки)
 CSRF_COOKIE_SECURE = False  # CSRF cookie работают без HTTPS (только dev)
 
 
@@ -130,7 +130,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'ALEX800886',
         'HOST': '127.0.0.1',
-        'PORT': '5434',
+        'PORT': '5432',
     }
 }
 
