@@ -2,10 +2,12 @@ import icon from "../assets/icon.png";
 import cart from "../assets/cart.svg";
 import favorite from "../assets/favorite.svg";
 import empty from "../assets/empty.jpg";
+import homeIcon from "../assets/homeIcon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import apiClient from "../api/client";
 import { useState, useEffect } from "react";
+
 
 
 const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll, isAdmin}) => {
@@ -57,7 +59,7 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll, isAd
                 <img className="sneakersImg" src={`http://127.0.0.1:8000${item.sneaker.image}`} alt={item.sneaker.name}/>
                 <div className="itemText">
                   <p className="description">{item.sneaker.name}</p>
-                  <p className="price">{item.sneaker.price} тг</p>
+                  <p className="price">{Number(item.sneaker.price)} тг</p>
                 </div>
                 <button onClick={(e) => handleDeleteFromCart(item.sneaker.id, e)}> Удалить </button>
               </div>
@@ -94,8 +96,12 @@ const Header = ({user, cartItems, setUser, handleDeleteFromCart, DeleteAll, isAd
             <h1 className="iconText">SNEAKERS</h1>
             <p className="iconP">Магазин лучших кроссовок</p>
           </div>
+           
+
         </div>
+        
         <div className="iconButtons">
+          <Link className="login" to="/"><img src={homeIcon} width={20} height={20} alt="" /></Link>
           <div className="cartButton" onClick={BasketClick}>
             <img src={cart} alt="" />
           </div>

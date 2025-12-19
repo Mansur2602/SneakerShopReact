@@ -172,7 +172,7 @@ def CartList(request):
             m.CartItem.objects.filter(user=request.user).delete()
             return Response({"message": "Все элементы удалены из корзины"}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Не передан sneakerId"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Не передан sneakerId или параметр"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST', 'DELETE'])
 @authentication_classes([CookieJWTAuthentication])

@@ -23,7 +23,7 @@ const Card = ({sneakers, cartItems, favoriteItems, handleAddToCart, handleDelete
       </div>
       {showModal && (
       <div className="modalOverlay">
-      <div className="modalWindowAdd">
+      <div className="modalWindow">
         <p>{modalText}</p>
         </div>
     </div>

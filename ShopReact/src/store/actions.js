@@ -58,13 +58,6 @@ export const addSneaker = (sneakerData) => {
   }
  }
 
-// export const updateSneaker = (sneakerId, updatedData) => {
-//   return async (dispatch) => {
-//     const res = await apiClient.put("admin/sneakers/", { sneakerId, ...updatedData });
-//     dispatch({ type: UPDATE_SNEAKER, payload: res.data });
-//   };
-// };
-
 export const updateSneaker = (sneakerId, updatedData) => {
   return async (dispatch) => {
     updatedData.append("sneakerId", sneakerId);

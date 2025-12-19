@@ -76,7 +76,6 @@ const AdminSneaker = ({sneakers}) => {
     const isConfirmed = window.confirm("Вы уверены, что хотите удалить этот товар?");
     if (isConfirmed) {
         dispatch(deleteSneaker(sneakerId));
-        alert("Товар удален");
     }
 };
 
